@@ -1,0 +1,20 @@
+sequenceDiagram                                              /*EXERCISE 0.6*/
+    participant browser
+    participant server
+    participant database
+
+    Note right of browser: User interacts with the SPA (single-page app)
+
+    browser->>browser: User writes a new note and clicks Save
+    browser->>browser: Capture note content and date
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>database: Save new note
+    activate database
+    database-->>server: New note saved
+    deactivate database
+    server-->>browser: 201 Created
+    deactivate server
+
+    Note right of browser: The SPA updates the UI with the new note
