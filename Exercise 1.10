@@ -1,0 +1,75 @@
+// App.jsx
+
+import React, { useState } from 'react';
+
+const Button = ({ handleClick, text }) => {
+  return (
+    <button onClick={handleClick}>{text}</button>
+  );
+};
+
+const StatisticLine = ({ text, value }) => {
+  return (
+    <p>{text}: {value}</p>
+  );
+};
+
+const Statistics = ({ good, neutral, bad }) => {
+  // Calculate the total number of collected feedback
+  const totalFeedback = good + neutral + bad;
+
+  // Calculate the average score
+  const averageScore = (good - bad) / totalFeedback || 0;
+
+  // Calculate the percentage of positive feedback
+  const positivePercentage = (good / totalFeedback) * 100 || 0;
+
+  return (
+    <div>
+      <h2>Feedback Statistics</h2>
+      <StatisticLine text="Good" value={good} />
+      <StatisticLine text="Neutral" value={neutral} />
+      <StatisticLine text="Bad" value={bad} />
+      <StatisticLine text="Total feedback" value={totalFeedback} />
+      <StatisticLine text="Average score" value={averageScore} />
+      <StatisticLine text="Positive feedback percentage" value={`${positivePercentage}%`} />
+    </div>
+  );
+};
+
+const App = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const handleFeedbackClick = (type) => {
+    // Update the corresponding state based on the feedback type
+    switch (type) {
+      case 'good':
+        setGood(good + 1);
+        break;
+      case 'neutral':
+        setNeutral(neutral + 1);
+        break;
+      case 'bad':
+        setBad(bad + 1);
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (
+    <div>
+      <h1>Feedback Collection</h1>
+
+      <Button handleClick={() => handleFeedbackClick('good')} text="Good" />
+      <Button handleClick={() => handleFeedbackClick('neutral')} text="Neutral" />
+      <Button handleClick={() => handleFeedbackClick('bad')} text="Bad" />
+
+      <Statistics good={good} neutral={neutral} bad={bad} />
+    </div>
+  );
+};
+
+export default App;
