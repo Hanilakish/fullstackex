@@ -1,0 +1,28 @@
+sequenceDiagram                                            /*EXERCISE 0.4*/
+    participant browser
+    participant server
+    participant database
+
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>database: Save new note
+    activate database
+    database-->>server: New note saved
+    deactivate database
+    server-->>browser: 201 Created
+    deactivate server
+
+    Note right of browser: The user writes a new note and clicks Save
+
+    browser->>browser: Capture note content and date
+    browser->>server: POST data to the server
+    activate server
+    server-->>server: Validate and save note
+    server-->>database: Save new note
+    activate database
+    database-->>server: New note saved
+    deactivate database
+    server-->>browser: 201 Created
+    deactivate server
+
+    Note right of browser: The browser updates the UI with the new note
