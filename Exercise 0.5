@@ -1,0 +1,26 @@
+sequenceDiagram                                                       /*EXERCISE 0.5*/
+    participant browser
+    participant server
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server-->>browser: HTML document for SPA
+    deactivate server
+
+    Note right of browser: The SPA is loaded, and JavaScript starts
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: JavaScript for SPA
+    deactivate server
+
+    Note right of browser: The SPA JavaScript initializes and fetches data
+
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser: [{ "content": "HTML is easy", "date": "2023-1-1" }, ... ]
+    deactivate server
+
+    Note right of browser: The SPA renders the notes using the fetched data
+
+    browser->>browser: User interacts with the SPA (e.g., views and adds notes)
